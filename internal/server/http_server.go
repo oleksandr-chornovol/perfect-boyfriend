@@ -25,7 +25,7 @@ func (s HTTPServer) InitRoutes() {
 
 	s.engine.GET("/compliments", complimentHandler.GetCompliments)
 	s.engine.POST("/compliments", complimentHandler.CreateCompliment)
-	s.engine.DELETE("/compliments", complimentHandler.DeleteCompliment)
+	s.engine.DELETE("/compliments/:id", complimentHandler.DeleteCompliment)
 }
 
 func (s HTTPServer) Start() {
