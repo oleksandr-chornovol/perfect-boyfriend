@@ -3,7 +3,6 @@ package jobs
 import (
 	"log"
 	"math/rand"
-	"perfect-boyfriend/internal/cache"
 	"perfect-boyfriend/internal/clients"
 	"perfect-boyfriend/internal/database"
 	"perfect-boyfriend/internal/models"
@@ -37,7 +36,10 @@ func (sg SendGreeting) Handle() {
 		sg.db.Where("is_greeting = true AND proper_weather = ''").Find(&compliments)
 	}
 
-	for _, chat := range cache.GetAllChats() {
+	var chats []models.Chat
+	sg.db.Find(&chats)
+
+	for _, chat := range chats {
 		rand.Seed(time.Now().UnixNano())
 		randomCompliment := compliments[rand.Intn(len(compliments))]
 

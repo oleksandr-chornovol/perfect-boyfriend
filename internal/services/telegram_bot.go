@@ -2,10 +2,10 @@ package services
 
 import (
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
+	"gorm.io/gorm/clause"
 	"log"
 	"math/rand"
 	"os"
-	"perfect-boyfriend/internal/cache"
 	"perfect-boyfriend/internal/clients"
 	"perfect-boyfriend/internal/database"
 	"perfect-boyfriend/internal/models"
@@ -46,7 +46,11 @@ func (tgb TelegramBot) Start() {
 }
 
 func (tgb TelegramBot) handleIncomingMessage(message *tgbotapi.Message) {
-	cache.AddChat(message.Chat)
+	tgb.db.Clauses(clause.OnConflict{
+		Columns: []clause.Column{{Name: "id"}},
+	}).Create(models.Chat{
+		ID: message.Chat.ID,
+	})
 
 	var weather string
 	var err error

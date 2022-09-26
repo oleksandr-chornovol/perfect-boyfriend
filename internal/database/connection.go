@@ -24,6 +24,7 @@ func NewConnection() *Connection {
 func (c Connection) RunMigrations() {
 	allModels := [...]any{
 		models.Compliment{},
+		models.Chat{},
 	}
 
 	for _, model := range allModels {
