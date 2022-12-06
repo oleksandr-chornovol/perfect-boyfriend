@@ -15,6 +15,12 @@ func NewCompliment(db *database.Connection) *Compliment {
 	return &Compliment{db: db}
 }
 
+func (c Compliment) Index(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "Hello!",
+	})
+}
+
 func (c Compliment) GetCompliments(ctx *gin.Context) {
 	var compliments []models.Compliment
 	c.db.Find(&compliments)

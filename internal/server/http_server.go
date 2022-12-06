@@ -23,6 +23,7 @@ func NewHTTPServer(db *database.Connection) *HTTPServer {
 func (s HTTPServer) InitRoutes() {
 	complimentHandler := handlers.NewCompliment(s.db)
 
+	s.engine.GET("/", complimentHandler.Index)
 	s.engine.GET("/compliments", complimentHandler.GetCompliments)
 	s.engine.POST("/compliments", complimentHandler.CreateCompliment)
 	s.engine.DELETE("/compliments/:id", complimentHandler.DeleteCompliment)
